@@ -7,8 +7,7 @@ const [,, src] = process.argv
 void (async(): Promise<void> => {
   await ldbd({
     src: join(process.cwd(), src),
-    port: 8001,
-    dbType: "PostgresQL"
+    port: 8001
   })
 })()
   // eslint-disable-next-line no-console

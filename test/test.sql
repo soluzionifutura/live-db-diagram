@@ -19,8 +19,8 @@ CREATE TABLE "Cities" (
 CREATE TABLE "Municipalities" (
     "id" SERIAL,
     "name" VARCHAR(255),
-    -- "latitude" REAL,
-    -- "longitude" REAL,
+    "latitude" REAL,
+    "longitude" REAL,
     "cityId" INT,
     "parmigianoReggianoDistrict" BOOLEAN,
     "granaPadanoDistrict" BOOLEAN,
@@ -55,8 +55,8 @@ CREATE TABLE IF NOT EXISTS "Organizations" (
   "region" VARCHAR(255) NOT NULL,
   "city" VARCHAR(255) NOT NULL,
   "municipality" VARCHAR(255) NOT NULL,
-  -- "latitude" REAL,
-  -- "longitude" REAL,
+  "latitude" REAL,
+  "longitude" REAL,
   "postalCode" VARCHAR(255) NOT NULL,
   "closed" BOOLEAN NOT NULL DEFAULT FALSE,
   "stableSettedUp" BOOLEAN NOT NULL DEFAULT FALSE,
@@ -139,7 +139,7 @@ CREATE TABLE IF NOT EXISTS "OrderRequestActions" (
   "catalogId" INT DEFAULT NULL,
   "discount" JSONB,
   "active" BOOLEAN,
-  -- "price" DOUBLE PRECISION,
+  "price" DOUBLE PRECISION,
   "authorUserId" INT REFERENCES "Users"("id"),
   "isAutomaticAction" BOOLEAN NOT NULL DEFAULT FALSE,
   "onlyVisibleToSeller" BOOLEAN DEFAULT false,
@@ -161,9 +161,9 @@ CREATE TABLE IF NOT EXISTS "PremiumSubscriptions" (
 CREATE TABLE IF NOT EXISTS "CronActions" (
   "name" VARCHAR(255),
   "cronExpression" VARCHAR(255),
-  -- "lastExecution" TIMESTAMPTZ,
+  "lastExecution" TIMESTAMPTZ,
   "enabled" BOOLEAN,
-  -- "additionalParameters" JSONB NOT NULL DEFAULT '{}'::JSONB,
+  "additionalParameters" JSONB NOT NULL DEFAULT '{}'::JSONB,
   PRIMARY KEY("name")
 );
 
@@ -176,7 +176,7 @@ CREATE TABLE IF NOT EXISTS "TopCattle" (
 );
 
 -- CREATE OR REPLACE FUNCTION calculate_distance(lat1 float, lon1 float, lat2 float, lon2 float, units varchar)
--- RETURNS float AS $dist$
+-- RETURNS float AS $$dist$
 --     DECLARE
 --         dist float = 0;
 --         radlat1 float;
