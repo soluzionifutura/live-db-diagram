@@ -1,0 +1,45 @@
+<!doctype html>
+<html>
+<head>
+  <title>{{{title}}}</title>
+  <style>
+    #error {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <pre id="error"></pre>
+  {{!-- <canvas id="canvas"></canvas> --}}
+  <div id="svg"></div>
+  <script>{{{graphre}}}</script>
+  <script>{{{nomnoml}}}</script>
+  <script>
+    void(async() => {
+      //const canvasElement = document.getElementById("canvas")
+      const svgElement = document.getElementById("svg")
+      const errorElement = document.getElementById("error")
+      const evtSource = new EventSource("./stream")
+      evtSource.onmessage = ({ data }) => {
+        try {
+          const { nomnomlCode, error } = JSON.parse(data)
+          if (nomnomlCode) {
+            console.log(nomnomlCode)
+            // nomnoml.draw(canvasElement, nomnomlCode, 0.9)
+
+            const svg = nomnoml.renderSvg(nomnomlCode)
+            svgElement.innerHTML = svg
+          }
+          if (error) {
+            throw new Error(error)
+          } else {
+            errorElement.innerHTML = ""
+          }
+        } catch(err) {
+          errorElement.innerHTML = `${err.message}`
+        }
+      }
+    })().catch(console.error)
+  </script>
+</body>
+</html>
